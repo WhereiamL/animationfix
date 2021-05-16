@@ -11,50 +11,6 @@ Citizen.CreateThread(function()
 end)
 
 
-RegisterNetEvent('ejectUser')
-AddEventHandler('ejectUser', function(vehicle)
-	local playerPed = PlayerPedId()
-	TaskLeaveAnyVehicle(playerPed, 0, 0)
-	Wait(1500)
-	SetPedToRagdoll(playerPed, 3000, 3000, 0, true, true, false)
-end)
-
-
-RegisterCommand("i", function(source, args, raw)
-	Citizen.CreateThread(function()
-	local ped = PlayerPedId()
-	local vehicle = GetVehiclePedIsIn(ped, false)
-	
-	if GetVehiclePedIsIn(ped, false) == 0 then
-		return
-	end
-	
-	if GetPedInVehicleSeat(vehicle, -1) ~= ped then
-		return
-	end
-	
-	
-	
-	local seat = tonumber(args[1])
-	local pedSeat = GetPedInVehicleSeat(vehicle, tonumber(args[1]))
-
-	if vehicle ~= 0 then
-		if pedSeat == ped then
-
-			return
-		end
-		if pedSeat == 0 then
-
-			return
-		end
-	end
-	
-	TriggerServerEvent('ejectUser', GetPlayerServerId(NetworkGetEntityOwner(pedSeat)), vehicle)
-	end)
-end, false)
-
-
--- FUNCTION
 function refreshskin()
 
   local playerPed = PlayerPedId()
